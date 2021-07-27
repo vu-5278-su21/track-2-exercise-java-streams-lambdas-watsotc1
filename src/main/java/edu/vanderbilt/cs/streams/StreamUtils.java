@@ -14,31 +14,12 @@ public class StreamUtils {
     // data points. You should only return complete windows. Each window should be
     // a list of the data points present at that step of the window sliding.
     public static <T> Stream<List<T>> slidingWindow(List<T> data, int windowSize){
-
-        // Let's assume that we have
-        // data = a, b, c, d, e, f
-        //
-        // We denote sliding windows as |x, y, z|
-        //
-        // With a windowSize of 3, the windows for this
-        // data would be:
-
-        // |a, b, c| d, e, f
-
-        // a, |b, c, d| e f
-
-        // a, b, |c, d, e| f
-
-        // a, b, c, |d, e, f|
-
-        // Hints:
-        //
-        // 1. This is solvable in ~3-4 lines of code
-        // 2. Think of how you could use IntStream.range()
-        // 3. List.subLIst will be useful to you
-        // 4. A windowSize < 1 should return an empty stream
-
-        return Stream.empty();
+        if((windowSize > data.size()) || windowSize < 1) {
+        	 return Stream.empty();
+        }
+        return IntStream
+        		.range(0, data.size()-windowSize+1)
+        		.mapToObj(start -> data.subList(start, start+windowSize));
     }
 
     /**
@@ -69,7 +50,11 @@ public class StreamUtils {
             // You need to update this code here to
             // return the average of the property that
             // is extracted with the function `f`
-            return 0.0;
+        	
+            return window.stream()
+                    .mapToDouble(f)
+                    .average()
+                    .getAsDouble();
         };
     }
 

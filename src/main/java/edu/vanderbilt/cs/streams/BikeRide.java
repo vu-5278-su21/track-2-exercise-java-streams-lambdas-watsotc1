@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.PrimitiveIterator;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -125,7 +128,7 @@ public class BikeRide {
     // Hint: see Arrays.stream(...)
     //
     public DoubleStream heartRateStream() {
-        return DoubleStream.empty();
+    	return DoubleStream.of(this.heartRate);
     }
 
     // @ToDo:
@@ -134,7 +137,7 @@ public class BikeRide {
     // stream of the specified values
     //
     public DoubleStream velocityStream() {
-        return DoubleStream.empty();
+        return DoubleStream.of(this.velocity);
     }
 
     // @ToDo:
@@ -142,7 +145,7 @@ public class BikeRide {
     // Implement this method so it returns a
     // stream of the specified values
     public DoubleStream gradeStream() {
-        return DoubleStream.empty();
+        return DoubleStream.of(this.grade);
     }
 
     // @ToDo:
@@ -150,7 +153,7 @@ public class BikeRide {
     // Implement this method so it returns a
     // stream of the specified values
     public DoubleStream altitudeStream() {
-        return DoubleStream.empty();
+        return DoubleStream.of(this.altitude);
     }
 
     // @ToDo:
@@ -158,7 +161,7 @@ public class BikeRide {
     // Implement this method so it returns a
     // stream of the specified values
     public Stream<LatLng> coordinateStream() {
-        return Stream.empty();
+        return Stream.of(this.coordinates);
     }
 
 
@@ -171,7 +174,9 @@ public class BikeRide {
     // data arrays (e.g., heartRate, velocity, etc.)
     //
     public Stream<DataFrame> fusedFramesStream() {
-        return Stream.empty();
+        return IntStream
+        		.range(0, coordinates.length)
+        		.mapToObj(i -> new DataFrame(coordinates[i], grade[i], altitude[i], velocity[i], heartRate[i]));
     }
 
 
